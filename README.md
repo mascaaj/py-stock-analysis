@@ -16,6 +16,7 @@ Will create own template after this project has been completed.
 ### Dependencies :
 - python 3.7
 - pandas
+- matplotlib
 - cookiecutter (will be used in future)
 
 
