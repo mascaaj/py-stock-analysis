@@ -17,6 +17,7 @@ Will create own template after this project has been completed.
 - python 3.7
 - pandas
 - matplotlib
+- numpy
 - cookiecutter (will be used in future)
 
 

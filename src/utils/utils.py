@@ -1,9 +1,30 @@
+#!/usr/bin/env python
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
+__author__  = "Aloke Mascarenhas"
+__credits__ = ["Udacity - ML for finance",
+                "Charting and Tech Analysis - Fred McAllen", "Yahoo Finance"]
+__license__ = "Apache 2.0"
+__version__ = "0.0.1"
+__status__  = "Developement"
+
+#Todo :
+# add proper docstrings to each function.
+# add unit testing
+
 def read_file(filename,cols=['Date','Adj Close']):
-    """Read in a file name and return dataframe with the specified columns"""
+    """Read in a file name and return dataframe with the specified columns
+
+        Arguments:
+            filename {string} -- Path to csv to be loaded
+            cols {list} -- List of columns (headers) to be read in.
+
+        Returns:
+            dataframe -- dataframe with the corresponding data
+    """
     columns = cols
     df= pd.read_csv(filename, index_col="Date",
                     parse_dates=True,usecols=columns,
