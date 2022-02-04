@@ -10,6 +10,15 @@ This is loosely tied to the udacity course - Machine Learning for Trading.
 
 ## Setup and workflow:
 
+Currently, cookie cutter template has been borrowed from [here][template_ref]
+Will create own template after this project has been completed.
+
 ### Dependencies :
 - python 3.7
-- pandas 
+- pandas
+- matplotlib
+- numpy
+- cookiecutter (will be used in future)
+
+
+   [template_ref]: <https://github.com/drivendata/cookiecutter-data-science>
