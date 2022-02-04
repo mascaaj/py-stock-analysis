@@ -145,3 +145,66 @@ def get_cumulative_returns(df,log=False):
         return cum_returns
     else:
         print("logging disabled")
+
+def daily_returns_stats_single(df):
+    """
+    Single stock stats
+    Prints the daily return stats and histogram with mu and +/- 1 sigma
+    returns mean, sigma and kurtosis.
+    """
+    dr = get_daily_returns(df, log=True)
+    dr.hist(bins=20)
+    mean = dr.mean().values
+    sd = dr.std().values
+    print("Mean :",mean)
+    print("Std Dev :",sd)
+    kurt = dr.kurtosis().values
+    print("Kurtosis :",kurt)
+    plt.axvline(x=mean,color="white",linestyle="--",linewidth="2")
+    plt.axvline(x=mean+sd,color="red",linestyle="--")
+    plt.axvline(x=mean-sd,color="red",linestyle="--")
+    plt.show()
+    return mean,sd,kurt
+
+def daily_returns_stats_multiple(df,bins=20,alpha=0.65,log=True):
+    """
+    Single stock stats
+    Prints the daily return stats and histogram with mu and +/- 1 sigma
+    returns mean, sigma and kurtosis in a dataframe
+    """
+    dr = get_daily_returns(df, log=True)
+    symbols = dr.columns.values.tolist()
+    for sym in symbols:
+        dr[sym].hist(bins=bins,label = sym,edgecolor='k', alpha=alpha)
+    mean = dr.mean().values
+    sd = dr.std().values
+    kurt = dr.kurtosis().values
+    output = pd.DataFrame({'mean':mean,'sd':sd,'kurt':kurt},index=symbols)
+    if log==True:
+        print(output)
+    plt.legend(loc='upper right')
+    plt.show()
+    return output
+
+def daily_scatter_stats(df,symbols=[],log=False):
+    """
+    Scatterplots and linear regression values for two stocks
+    If not specified, the function uses the first two columns
+    If log is turned on, beta, alpha values are printed
+    Along with the corellation using default pearson method.
+    """
+    dr = get_daily_returns(df, log=True)
+    if not symbols:
+        print("Symbol array is empty, selecting the first columns of data frame")
+        symbols = dr.columns.values.tolist()
+    print(symbols[0],"vs",symbols[1])
+    beta,alpha = np.polyfit(dr[symbols[0]],dr[symbols[1]],1)
+    if log==True:
+        print ("beta_{}".format(symbols[1]), beta)
+        print ("alpha_{}".format(symbols[1]), alpha)
+    dr.plot(kind='scatter',x=symbols[0],y=symbols[1],edgecolor='k')
+    plt.plot(dr[symbols[0]],beta*dr[symbols[0]] + alpha,'-',color="red")
+    plt.grid()
+    plt.show()
+    if log==True:
+        print(dr.corr(method='pearson'))
